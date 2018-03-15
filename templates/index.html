@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block main %}
+
+        <div class="pure-u-1 pure-u-md-3-4">
+            <div class="content_container">
+            {% if category  %}
+            <h1 class="label-title">正在查看分类为 {{ category.name }} 下的文章</h1>
+            {% endif %}
+            {% if q  %}
+            <h1 class="label-title">正在查看关键字为 ‘{{ q }}’ 下的文章</h1>
+            {% endif %}
+            {% if tag  %}
+            <h1 class="label-title">正在查看标签为 {{ tag.name }} 下的文章</h1>
+            {% endif %}
+                {% if error_msg %}
+                    <h1 class="label-title"> {{ error_msg }}</h1>
+
+                {% else %}
+                {% for article in article_list.object_list %}
+                <div class="post">
+                    <h1 class="post-title">
+                        <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                    </h1>
+                    <div class="post-meta">{{ article.create_time }}</div>
+                    <div class="post-content">{{ article.summary }}</div>
+                    <p class="readmore"><a href="{{ article.get_absolute_url }}">阅读全文</a></p></div>
+                {% endfor %}
+    <nav class="page-navigator">
+    {% if article_list.has_previous %}
+        <a class="extend prev" rel="prev" href="?{{ page_obj.previous_page_number.querystring }}">上一页</a>
+    {% endif %}
+        {% for page in article_list.pages %}
+        {% if page %}
+            {% ifequal page article_list.number %}
+                <span class="page-number current">{{ page }}</span>
+            {% else %}
+                <a href="?{{ page.querystring }}" class="page-number">{{ page }}</a>
+            {% endifequal %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+{% if article_list.has_next %}
+        <a href="?{{ article_list.next_page_number.querystring }}" class="extend next">下一页</a>
+
+    {% endif %}
+
+    </nav>
+            {% endif %}
+            </div>
+        </div>
+
+{% endblock %}

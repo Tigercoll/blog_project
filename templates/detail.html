@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="pure-u-1 pure-u-md-3-4">
+    <div class="content_container">
+        <div class="post">
+
+            <h1 class="post-title">{{ article.title }}</h1>
+            <div class="post-meta">{{ article.create_time }}
+                <span> | </span>
+                <span class="category">
+                    <a href="/categories/emotion/">{{ article.category }}</a></span>
+            </div>
+{#            <a class="disqus-comment-count" data-disqus-identifier="emotion/caprice2.html" href="/emotion/caprice2.html#disqus_thread">&nbsp; 评论 {{ article.comments }}</a>#}
+            <div class="post-content">
+                {{ article.content | safe }}
+</div>
+{#            <script type="text/javascript" src="/js/share.js?v=4.0.0" async=""></script>#}
+
+            <div class="tags">
+                {% for tag in article.tag.all %}
+                <a href="{% url 'blog:tag' tag.id %}">{{ tag.name }}</a>
+
+                {% endfor %}
+            </div>
+           <div class="post-nav">
+               {% if article_previous %}
+               <a class="pre" href="{{ article_previous.get_absolute_url }}">{{ article_previous.title }}</a>
+           {% endif %}
+               {% if article_next %}
+               <a class="next" href="{{ article_next.get_absolute_url }}">{{ article_next.title }}</a>
+                {% endif %}
+           </div>
+        <!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNDY4NC8xMTIyMQ==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+
+
+
+
+
+
+
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
